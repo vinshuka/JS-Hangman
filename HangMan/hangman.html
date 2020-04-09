@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="main.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="main.js" async></script>
+        <title>HangMan</title>
+    </head>
+    <body>
+        <div class="Gameboard">
+            <h1>HANGMAN</h1>
+            <pre class='hangman'></pre>
+            <div class="holder">
+                <h3>Guess a Letter:</h3>
+                <ul class="word"></ul>
+                <input type="text" id="letterguess" maxlength="1">
+                <button id="subguess">Guess</button>
+                <button id="reset">Reset</button>
+                <h3 class="condition"></h3>
+                <p class="error"></p>
+                <h4>Guessed letters:</h4>
+                <p class="prevguess"></p>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <p>Created by Melissa Christie for COMP1073 Client-side JavaScript</p>
+    </footer>
+</html>
