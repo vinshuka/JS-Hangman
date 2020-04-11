@@ -2,7 +2,6 @@
 let wordList = ['hello', 'there', 'sailor', 'javascript', 'programmer', 'hangman', 'elephant', 'bacon', 'algorithm', 'computer'];
 let secretWord = '';
 let guessedLetters = [];
-let word = '';
 let guessCounter = 0;
 let validInput = /[abcdefghijklmnopqrstuvwxyz]/i;
 let hangman = ['\t\t---------\n\t\t|\t|\n\t\t|\n\t\t|\n\t\t|\n\t\t|\n\t--------------------------',
@@ -22,7 +21,6 @@ let getRandomWord = function(wordList)
 //create word line
 let createWordArea = function(secretWord)
 {
-
     for(let i = 0; i < secretWord.length; i++)
     {
         let letter = document.createElement('li');
@@ -34,7 +32,11 @@ let createWordArea = function(secretWord)
     $('li').css('padding','10px');
 }
 
-secretWord = getRandomWord(wordList)
+//display the hangman
+let displayHangman = function()
+{
+    $('.hangman').text(hangman[guessCounter]);
+}
 
 //game setup creates the word line and display the gallows
 let setup = function(secretWord)
@@ -73,7 +75,7 @@ let grabWord = function()
 }
 
 //determine win/lose condition
-let checkWinLose = function()
+let checkWinLose = function(word)
 {
     if(word === secretWord)
     {
@@ -88,12 +90,6 @@ let checkWinLose = function()
     }
 }
 
-//display the hangman
-let displayHangman = function()
-{
-    $('.hangman').text(hangman[guessCounter]);
-}
-
 let validateGuess = function(guess)
 {
     return validInput.test(guess) && !guessedLetters.includes(guess);
@@ -104,6 +100,8 @@ $('#reset').click(function ()
     window.location.reload(false);
 })
 
+//select random word
+secretWord = getRandomWord(wordList);
 
 //game loop
 setup(secretWord)
@@ -117,9 +115,9 @@ $('#subguess').click(function()
             setLetters(guess, secretWord);
             guessedLetters.push(guess);
             $('.prevguess').text(guessedLetters.toString());
-            word = grabWord();
+            let word = grabWord();
+            checkWinLose(word);
             displayHangman();
-            checkWinLose();
             $('#letterguess').focus();
         }
         else
@@ -127,8 +125,9 @@ $('#subguess').click(function()
             guessedLetters.push(guess);
             $('.prevguess').text(guessedLetters.toString());
             guessCounter++;
+            let word = grabWord();
+            checkWinLose(word);
             displayHangman();
-            checkWinLose();
             $('#letterguess').focus();
         }
         $('#letterguess').val('');
